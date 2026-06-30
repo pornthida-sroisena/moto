@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>เว็บไซต์รับฝากมอเตอร์ไซค์</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <div id="userStatus" class="muted" style="text-align:right; margin-bottom:6px;"></div>
+
+    <!-- หน้าแรก -->
+    <section id="homeSection" class="hero">
+      <div class="hero-left">
+        <h1>เว็บไซต์รับฝากรถ<br>มอเตอร์ไซค์</h1>
+        <p>วันละ 15 บาท</p>
+        <img src="Moto/H forza-NB.png" alt="moto" class="moto-img"
+             onerror="this.onerror=null; this.src='Moto/H forza.jpg'">
+      </div>
+
+      <div class="card panel">
+        <div class="corner-actions">
+          <button class="btn-mini" id="adminBtn">Admin</button>
+        </div>
+
+        <div id="logoutWrap" class="corner-actions bottom hidden">
+          <button class="btn-mini btn-red" id="logoutMini">Logout</button>
+        </div>
+
+        <!-- กล่อง Auth -->
+        <div id="authBox">
+          <div class="title" id="authTitle">Login</div>
+
+          <!-- Login -->
+          <form id="loginForm" autocomplete="off">
+            <div class="field"><label>Gmail</label><input id="loginUser" required></div>
+            <div class="field"><label>Password</label><input id="loginPass" type="password" required></div>
+            <div class="center" style="margin:6px 0 14px">
+              <button class="btn" type="submit">Login</button>
+            </div>
+            <p class="muted" style="text-align:center">
+              ยังไม่มีบัญชีใช่หรือไม่
+              <a href="#" id="gotoSignup">Sign in</a>
+            </p>
+          </form>
+
+          <!-- Signup step 1 -->
+          <form id="signup1" class="hidden" autocomplete="off">
+            <div class="field"><label>Username</label><input id="suUser" required></div>
+            <div class="field"><label>Tel</label><input id="suTel" type="tel" placeholder="08x-xxx-xxxx"></div>
+            <div class="field"><label>Email</label><input id="suEmail" type="email" placeholder="name@mail.com" required></div>
+            <div class="center" style="margin-top:8px">
+              <button class="btn btn-ghost" type="button" id="backToLogin1">กลับไปล็อกอิน</button>
+              <button class="btn" type="submit">ถัดไป</button>
+            </div>
+          </form>
+
+          <!-- Signup step 2 -->
+          <form id="signup2" class="hidden" autocomplete="off">
+            <div class="field"><label>Password</label><input id="suPass" type="password" required></div>
+            <div class="field"><label>Confirm Password</label><input id="suConfirm" type="password" required></div>
+            <div class="center" style="margin-top:8px">
+              <button class="btn btn-ghost" type="button" id="backToLogin2">กลับไปล็อกอิน</button>
+              <button class="btn" type="submit">ยืนยัน</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- เมนูหลังล็อกอิน -->
+        <div id="menuBox" class="hidden" style="padding:12px">
+          <div class="title" id="welcomeName">Name User</div>
+          <div class="field">
+            <button class="btn" id="goDeposit">ฝากรถ</button>
+          </div>
+          <div class="field">
+            <button class="btn btn-ghost" id="goHistory">ข้อมูลการฝาก</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ฝากรถ -->
+    <section id="depositSection" class="section hidden">
+      <h2 style="margin:0 0 8px">ฝากรถ</h2>
+      <div class="split">
+        <form id="depositForm" autocomplete="off">
+          <div class="row">
+            <div>
+              <label>ประเภทรถ</label>
+              <select id="type"><option value="มอเตอร์ไซค์">มอเตอร์ไซค์</option></select>
+            </div>
+            <div>
+              <label>ยี่ห้อ</label>
+              <select id="brand" required>
+                <option value="">— เลือก —</option>
+                <option value="HONDA">HONDA</option>
+                <option value="YAMAHA">YAMAHA</option>
+              </select>
+            </div>
+            <div>
+              <label>รุ่น</label>
+              <select id="model" required>
+                <option value="">— เลือก —</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div><label>ทะเบียนรถ</label><input id="plate" placeholder="1กก-1234" required></div>
+            <div><label>วันที่ฝาก</label><input id="startDate" type="date" required></div>
+            <div><label>วันที่รับรถ</label><input id="endDate" type="date" required></div>
+          </div>
+
+          <p class="muted" id="priceLive" style="margin-top:6px">
+            รวมค่าฝาก: 15 บาท (ขั้นต่ำ 1 วัน)
+          </p>
+
+          <div class="field">
+            <label>หมายเหตุ</label>
+            <textarea id="note" rows="3" placeholder="ระบุเพิ่มเติม (ถ้ามี)"></textarea>
+          </div>
+
+          <div class="row" style="margin-top:8px">
+            <div class="field" style="flex:1 1 160px">
+              <button class="btn btn-red" type="button" id="cancelDeposit">ยกเลิก</button>
+            </div>
+            <div class="field" style="flex:1 1 160px">
+              <button class="btn" type="submit">ยืนยัน</button>
+            </div>
+            <p class="muted" style="flex-basis:100%">คิดค่าบริการ <b>15 บาท/วัน</b> (ขั้นต่ำ 1 วัน)</p>
+          </div>
+        </form>
+
+        <div>
+          <div class="preview"><img id="modelPreview" alt="preview"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ตรวจสอบ & ชำระเงิน -->
+    <section id="reviewSection" class="section hidden">
+      <h2 style="margin:0 0 12px; text-align:center">ตรวจสอบข้อมูล<br>ชำระเงิน</h2>
+      <div class="split">
+        <div>
+          <div class="list" id="reviewList"></div>
+        </div>
+        <div>
+          <div class="qr">
+            <img src="Decorate/QR.png" onerror="this.src='Decorate/QR.jpg'" alt="QR">
+            <div>
+              <div class="field"><b>จำนวนเงินที่ต้องชำระ :</b> <span id="payTotal">0</span> บาท</div>
+              <div class="muted">ชื่อบัญชี : ตี๋ใหญ่ 888</div>
+            </div>
+          </div>
+          <div class="row" style="margin-top:16px">
+            <div><button class="btn" id="confirmPay">ยืนยัน</button></div>
+            <div><button class="btn btn-red" id="backToForm">ยกเลิก</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- สำเร็จ -->
+    <section id="successSection" class="section hidden">
+      <h2 style="margin:0 0 12px; text-align:center">ฝากสำเร็จ ✅</h2>
+      <div class="split">
+        <div class="list" id="successList"></div>
+        <div class="preview" style="aspect-ratio:4/3"><img id="successImg" alt=""></div>
+      </div>
+      <p style="text-align:center; margin-top:12px; color: var(--#ff6868);">
+        โปรดนำใบเสร็จนี้ไปแสดงต่อพนักงาน
+      </p>
+
+      <div class="center" style="margin-top:10px">
+        <button class="btn" id="finishBtn">เสร็จสิ้น (กลับหน้าแรก)</button>
+      </div>
+    </section>
+
+    <!-- ประวัติการฝาก -->
+    <section id="historySection" class="section hidden">
+      <h2 style="margin:0 0 12px">ข้อมูลการฝาก</h2>
+      <div id="historyList" class="hist-list"></div>
+      <div class="center" style="margin-top:14px">
+        <button class="btn btn-outline" id="backHome">กลับหน้าแรก</button>
+      </div>
+    </section>
+
+    <!-- หลังบ้าน (Admin) -->
+    <section id="adminSection" class="section hidden">
+      <h2 style="margin:0 0 12px">Admin Mode</h2>
+
+      <!-- กล่องล็อกอินแอดมิน (Local) -->
+      <div id="adminAuth">
+        <div class="row">
+          <div class="field"><label>Admin Username</label><input id="adminUser" placeholder="admin-name"></div>
+          <div class="field"><label>Admin Password</label><input id="adminPass" type="password" placeholder="password"></div>
+        </div>
+        <div class="center">
+          <button class="btn btn-ghost" id="adminBackHome">กลับหน้าแรก</button>
+          <button class="btn" id="adminLoginBtn">เข้าสู่ระบบแอดมิน</button>
+        </div>
+        <p class="muted" style="margin-top:20px">* หมายเหตุ : โหมดแอดมินใช้บัญชีภายใน (ไม่ใช่ Firebase)</p>
+      </div>
+
+      <!-- แดชบอร์ด -->
+      <div id="adminDash" class="hidden">
+        <div class="row" style="align-items:flex-end">
+          <div class="field">
+            <label>ค้นหาจากทะเบียนรถ</label>
+            <input id="adminSearch" placeholder="เช่น 1กก-1234">
+          </div>
+          <div class="field">
+            <label>ยี่ห้อ</label>
+            <select id="adminBrand"><option value="">ทั้งหมด</option></select>
+          </div>
+          <div class="field">
+            <label>รุ่น</label>
+            <select id="adminModel" disabled><option value="">ทั้งหมด</option></select>
+          </div>
+        </div>
+
+        <div class="row" style="align-items:flex-end; margin-top:10px">
+          <div class="field"><label>ตั้งแต่วันที่</label><input id="adminFrom" type="date"></div>
+          <div class="field"><label>ถึงวันที่</label><input id="adminTo" type="date"></div>
+          <div class="field" style="flex:0 0 160px"><label style="visibility:hidden">.</label><button class="btn" id="adminExport">Export CSV</button></div>
+          <div class="field" style="flex:0 0 160px"><label style="visibility:hidden">.</label><button class="btn btn-red" id="adminLogout">ออกจากระบบ</button></div>
+        </div>
+
+        <div class="admin-metrics">
+          <div class="metric"><div class="k">จำนวนรายการทั้งหมด</div><div class="v" id="mTotal">0</div></div>
+          <div class="metric"><div class="k">รายได้รวม (บาท)</div><div class="v" id="mRevenue">0</div></div>
+          <div class="metric"><div class="k">ลูกค้ายูนีค</div><div class="v" id="mCustomers">0</div></div>
+          <div class="metric"><div class="k">รถค้างฝาก (วันนี้)</div><div class="v" id="mActive">0</div></div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="table" id="adminTable">
+            <colgroup>
+              <col style="width:14rem;">
+              <col style="width:9rem;">
+              <col style="width:8rem;">
+              <col>
+              <col style="width:9.5rem;">
+              <col style="width:9.5rem;">
+              <col style="width:4.5rem" class="col-num">
+              <col style="width:7rem"   class="col-num">
+              <col>
+              <col style="width:5.5rem" class="col-del">
+            </colgroup>
+            <thead>
+              <tr>
+                <th>เวลาบันทึก</th>
+                <th>ผู้ใช้</th>
+                <th>ทะเบียน</th>
+                <th>ยี่ห้อ/รุ่น</th>
+                <th>ฝาก</th>
+                <th>รับ</th>
+                <th>วัน</th>
+                <th>ยอด(฿)</th>
+                <th>หมายเหตุ</th>
+                <th>ลบ</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <footer>© 2025 ฝากรถมอเตอร์ไซค์ — วันละ 15 บาท</footer>
+  </div>
+
+  <!-- สคริปต์แยกไฟล์ -->
+<script type="module" src="./app.js"></script>
+<script type="module" src="./firebase-db.js"></script>
+<script type="module" src="./firebase-auth.js"></script>
+
+</body>
+</html>
